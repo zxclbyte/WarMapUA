@@ -1,0 +1,196 @@
+<html lang="uk_UA">
+<head>
+
+<meta charset="UTF-8" />
+<title>WarMapUA | Мапа війни в Україні</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+
+<meta name="title" content="WarMapUAMAP | Мапа війни в Україні" />
+<meta name="description" content="Новини війни Росії проти України на мапі" />
+<link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png" />
+<link rel="manifest" href="images/site.webmanifest" />
+<link rel="mask-icon" href="images/safari-pinned-tab.svg" color="#5bbad5" />
+<meta name="msapplication-TileColor" content="#da532c" />
+<meta name="theme-color" content="#ffffff" />
+
+<link rel="stylesheet" href="css/main-9d086fea40.css" type="text/css" snitch-asset />
+
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://deepstatemap.live" />
+<meta property="og:title" content="WarMapUAMAP | Мапа війни в Україні" />
+<meta property="og:description" content="Новини війни Росії проти України на мапі" />
+<meta property="og:image" content="https://deepstatemap.live/images/meta_og.jpg" />
+
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content="https://deepstatemap.live" />
+<meta property="twitter:title" content="WarMapUAMAP | Мапа війни в Україні" />
+<meta property="twitter:description" content="Новини війни Росії проти України на мапі" />
+<meta property="twitter:image" content="https://deepstatemap.live/images/meta_og.jpg" />
+<link rel="alternate" hreflang="x-default" href="index.html" />
+<link rel="alternate" hreflang="uk" href="index.html" />
+<link rel="alternate" hreflang="en" href="en.html" />
+<meta property="og:locale" content="uk_UA" />
+<meta property="og:site_name" content="Карта WarMapUA" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;600&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.8.0/leaflet.min.css" integrity="sha512-oIQ0EBio8LJupRpgmDsIsvm0Fsr6c3XNHLB7at5xb+Cf6eQuCX9xuX8XXGRIcokNgdqL1ms7nqbQ6ryXMGxXpg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.8.0/leaflet.min.js" integrity="sha512-TL+GX2RsOUlTndpkgHVnSQ9r6zldqHzfyECrdabkpucdFroZ3/HAhMmP2WYaPjsJCoot+0McmdPOLjmmicG9qg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mapbox-gl/1.13.1/mapbox-gl.min.js" integrity="sha512-WyDTdfP+imWTh/TVkV0xSt25+8GKtsChAgi2zuVJtxFyseDAFI3oKnf5AZoaQ7pD1190EpO3ccUJXJk02z2jvw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mapbox-gl-leaflet/0.0.15/leaflet-mapbox-gl.min.js" integrity="sha512-ATlsuFAaDjdHIY8OoLY05kPjJrhC4A0vqXxgera5tS3lwx88E+mZWiXRZ1u5xiZphmp1njypxiADydN6//a9Tw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mapbox-gl/1.13.1/mapbox-gl.min.css" integrity="sha512-f9ygkycTxYz4ZGWOrdRHvW8RvVtF0BzP0nl2a2eF2LE4N5FzXqtHnxip+Ses43V9l9QwP0iGs7NvCp7yrdBXpg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
+<script src="https://yigityuce.github.io/Leaflet.Control.Custom/Leaflet.Control.Custom.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/leaflet-modal@0.2.0/dist/L.Modal.min.js"></script>
+<script src="js/L.KML.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-hash/0.2.1/leaflet-hash.min.js" integrity="sha512-0A4MbfuZq5Au9EdpI1S5rUTXlibNBi8CuZ/X3ycwXyZiCjNzpiO9YH6EMqPgzZm6vfNCuZStBQHjnO17nIC0IQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/6.4.2/browser/pixi.min.js" integrity="sha512-YB+Jnx8/VO5uFB0S9NoOsSC1JHct0zTJI8GGijwuxNDLcZ/UkChDy/xUUBKEgnyhDVFTcdfwF5lTJ1lY/RcTwQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/leaflet-pixi-overlay@1.8.2/L.PixiOverlay.min.js" integrity="sha256-6cy4sEF667qVAfYHueNldOKSabvjVaztecy/xTEgVeE=" crossorigin="anonymous"></script>
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YTF2JECBDL"></script>
+<script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-YTF2JECBDL");
+      gtag("config", "UA-224282507-1");
+    </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="core/dom-util-3e7d9f59bc.js" snitch-asset></script>
+<script src="core/translations-7999d87586.js" snitch-asset></script>
+</head>
+<body>
+
+<noscript><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-WN7VWFN"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden"
+      ></iframe
+    ></noscript>
+<div id="fb-root"></div>
+<script async defer src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2"></script>
+
+
+<div class="error-modal" style="display: none">
+<p class="error-message"></p>
+</div>
+<div class="arty-modal" style="display: none">
+<div class="close-row">
+<span class="close-arty" onClick="ArtyShooter.cancel()">
+</span>
+</div>
+<h4>Дальність артилерії</h4>
+<p class="arty-result"></p>
+<p class="arty-howto">Натисніть на мапу для пострілу</p>
+</div>
+<a href="https://t.me/Project_WarMapUA" target="_blank" class="deepstate-logo">
+<img alt="WarMapUA Logo" src="images/logo.png" />
+</a>
+<div class="search-container" style="visibility: hidden;">
+<div class="search-bar-wrap">
+<input class="search-bar" type="text" placeholder="Пошук..." />
+<div class="search-clear">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z" /></svg>
+</div>
+</div>
+<div class="search-results" style="display: none"></div>
+</div>
+<div class="search-results" style="display: none"></div>
+<script>
+      setTimeout(function () {
+        var dscl = document.querySelector(".disclaimer");
+
+        var lsVal = window.localStorage.getItem("dscl-bp");
+        if (lsVal !== "true") {
+          dscl.style.display = "flex";
+        } else {
+          return;
+        }
+
+        document
+          .querySelector(".disclaimer .disagree")
+          .addEventListener("click", function () {
+            window.location.href = "https://google.com";
+          });
+        document
+          .querySelector(".disclaimer .agree")
+          .addEventListener("click", function () {
+            window.localStorage.setItem("dscl-bp", "true");
+            dscl.style.display = "none";
+          });
+      }, 500);
+
+  
+    </script>
+<div id="map" style="height: 100%; width: 100%"></div>
+<div class="history-range">
+<div class="history">
+<button class="history-nav play"></button>
+<button class="history-nav history-prev"><</button>
+<input type="date" id="history-calendar" class="history__calendar" required />
+<button class="history-nav history-next">></button>
+</div>
+</div>
+<script src="js/dsm_v2-b65fe35a1c.js" snitch-asset></script>
+<script async src="core/dialog-bb768bc541.js" snitch-asset></script>
+<script async src="core/posts-6108515ece.js" snitch-asset></script>
+
+<script>
+    //     async function load_shapefile() {
+    //   let url = 'https://api.maptiler.com/data/e4c5deba-c974-4797-aa17-b40b4682cee1/features.json?key=Mw2A3YE0W6B6hXvtWeir';
+    //   const response = await fetch(url)
+    //   const shape_obj = await response.json();
+    //   console.log(shape_obj);
+    //   return shape_obj;
+    // }
+    // async function main() {
+    //   const json = await load_shapefile();
+    //   L.geoJson(json, {style: occupiedStyle}).addTo(map);
+    // }
+
+    // main();
+
+    // var grayzoneStyle = {
+    //   "color": "#949494",
+    //   "weight": 1,
+    //   "opacity": 0
+    // };
+
+    // var occupiedStyle = {
+    //   "color": "#870303",
+    //   "opacity": 0
+    // };
+
+    // var freezonesStyle = {
+    //   "color": "#3321fc",
+    //   "weight": 1,
+    //   "opacity": 0
+    // };
+
+                  // Load kml file
+                  fetch('https://raw.githubusercontent.com/zxclbyte/mapapi/main/WarMapUA_API.kml')
+            .then(res => res.text())
+            .then(kmltext => {
+                // Create new kml overlay
+                const parser = new DOMParser();
+                const kml = parser.parseFromString(kmltext, 'text/xml');
+                const track = new L.KML(kml);
+                map.addLayer(track);
+
+                // Adjust map to show the kml
+                const bounds = track.getBounds();
+                map.fitBounds(bounds);
+            });
+</script>
+
+</body>
+</html>
