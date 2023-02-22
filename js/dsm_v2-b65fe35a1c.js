@@ -42,8 +42,8 @@ var features = [];
 var jsonLayerRailway = null;
 var currentBaseLayer = null;
 var baseLayers = {
-  terrain: null,
-  "default": terrain,
+  defaultType: null,
+  "default": null,
   terrain: null,
   satellite: null
 };
@@ -933,7 +933,170 @@ var History = {
     return "".concat(yyyy, "-").concat(mm, "-").concat(dd);
   }
 };
+var Ruler = {
+  rulerActive: false,
+  points: [// { lat: number, lng: number, marker: L.marker }
+  ],
+  polyline: null,
+  // or L.polyline
+  ui: {
+    modal: DomUtil.find(".ruler-modal")
+  },
+  init: function init(map) {
+    L.control.custom({
+      position: "bottomright",
+      content: "<div class=\"rule\" title=\"".concat(TranslateService.translate("controlTitle.ruler"), "\" style=\"width: 30px; height: 30px; line-height: 30px; text-align: center;  cursor: pointer;\"><img style=\"width: auto; height: 22px; margin-top: 4px\" src=\"https://cdn-icons-png.flaticon.com/512/484/484141.png\" alt=\"Cartographic data provided by MapTiler\" style=\"width: 110px;\">\n</div>"),
+      classes: "leaflet-bar custom-control",
+      events: {
+        click: function click(event) {
+          Ruler.toggle();
+        }
+      }
+    }).addTo(map);
+    map.on("click", function (event) {
+      if (Ruler.rulerActive) Ruler.handleMapClick(event);
+    });
+  },
+  toggle: function toggle() {
+    if (ArtyShooter.active) {
+      ArtyShooter.cancel();
+    }
 
+    return Ruler.rulerActive ? Ruler.clearMeasurement() : Ruler.startMeasurement();
+  },
+  startMeasurement: function startMeasurement() {
+    if (Ruler.rulerActive === true) return;
+    Ruler.rulerActive = true;
+    Ruler.render();
+  },
+  clearMeasurement: function clearMeasurement() {
+    if (Ruler.rulerActive === false) return;
+    Ruler.rulerActive = false;
+    Ruler.render();
+
+    var _iterator4 = _createForOfIteratorHelper(Ruler.points),
+        _step4;
+
+    try {
+      for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
+        var point = _step4.value;
+        point.marker.remove();
+      }
+    } catch (err) {
+      _iterator4.e(err);
+    } finally {
+      _iterator4.f();
+    }
+
+    Ruler.points = [];
+    if (Ruler.polyline !== null) Ruler.polyline.remove();
+    Ruler.polyline = null;
+  },
+  render: function render() {
+    if (this.rulerActive === false) {
+      Ruler.ui.modal.style.display = "none";
+      return;
+    }
+
+    Ruler.ui.modal.style.display = "block";
+
+    if (Ruler.points.length === 0) {
+      DomUtil.find(".ruler-modal .ruler-howto").innerText = TranslateService.translate("ruler.firstPressOnMap");
+      DomUtil.find(".ruler-modal .ruler-result").innerText = "";
+      return;
+    }
+
+    DomUtil.find(".ruler-modal .ruler-howto").innerText = TranslateService.translate("ruler.continuePressing");
+    var distance = 0; // meters
+
+    for (var i = 1; i < Ruler.points.length; i++) {
+      var p2 = Ruler.points[i];
+      var p1 = Ruler.points[i - 1];
+      distance += map.distance([p2.lat, p2.lng], [p1.lat, p1.lng]);
+    }
+
+    var totalDistance = TranslateService.translate("ruler.totalDistance");
+
+    if (distance < 1000) {
+      totalDistance += " ".concat(distance.toFixed(2), " m");
+    } else {
+      totalDistance += " ".concat((distance / 1000).toFixed(2), " km");
+    }
+
+    DomUtil.find(".ruler-modal .ruler-result").innerText = totalDistance;
+  },
+  handleMapClick: function handleMapClick(event) {
+    var icon = L.icon({
+      iconUrl: "/images/close.png",
+      iconSize: [0, 0]
+    });
+    var marker = L.marker([event.latlng.lat, event.latlng.lng], {
+      icon: icon,
+      draggable: true
+    });
+    marker.on("move", Ruler.handleMarkerDrag);
+    marker.addTo(map);
+    Ruler.points.push({
+      lat: event.latlng.lat,
+      lng: event.latlng.lng,
+      marker: marker
+    }); // Drawing Polyline between points
+
+    if (Ruler.points.length > 1) {
+      if (Ruler.polyline !== null) {
+        Ruler.polyline.remove();
+        Ruler.polyline = null;
+      }
+
+      Ruler.polyline = L.polyline(Ruler.points.map(function (p) {
+        return [p.lat, p.lng];
+      }), {
+        color: "#222"
+      });
+      Ruler.polyline.addTo(map);
+    }
+
+    if (Ruler.points.length > 0) {
+      Ruler.render();
+    }
+  },
+  handleMarkerDrag: function handleMarkerDrag(event) {
+    var target = event.target,
+        latlng = event.latlng,
+        oldLatLng = event.oldLatLng;
+    var leaflet_id = target._leaflet_id;
+    var modified = false;
+
+    for (var i = 0; i < Ruler.points.length; i++) {
+      if (Ruler.points[i].marker._leaflet_id === leaflet_id) {
+        Ruler.points[i].lat = latlng.lat;
+        Ruler.points[i].lng = latlng.lng;
+        modified = true;
+        break;
+      }
+    }
+
+    if (modified) {
+      if (Ruler.points.length > 1) {
+        if (Ruler.polyline !== null) {
+          Ruler.polyline.remove();
+          Ruler.polyline = null;
+        }
+
+        Ruler.polyline = L.polyline(Ruler.points.map(function (p) {
+          return [p.lat, p.lng];
+        }), {
+          color: "#222"
+        });
+        Ruler.polyline.addTo(map);
+      }
+
+      if (Ruler.points.length > 0) {
+        Ruler.render();
+      }
+    }
+  }
+};
 var MapContainer = {
   dragableMarker: null,
   init: function init() {
@@ -1149,7 +1312,7 @@ var MapContainer = {
           document.querySelector("a[data-show-mail]").addEventListener("click", showMail);
         }
       }
-    }).addTo(map); // WarMapUAUA
+    }).addTo(map); // DeepStateUA
 
     L.control.custom({
       position: "bottomright",
@@ -1303,7 +1466,7 @@ var MapContainer = {
           baseLayers.defaultType = "vector";
           baseLayers["default"] = L.mapboxGL({
             attribution: "<a href=\"https://www.maptiler.com/copyright/\" target=\"_blank\">&copy; MapTiler</a> <a href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\">&copy; OpenStreetMap contributors</a>",
-            style: "https://tiles.deepstatemap.live/api/maps/".concat(isEnglish() ? "WarMapUAMapEn" : "DeepStateMap", "/style.json")
+            style: "https://tiles.deepstatemap.live/api/maps/".concat(isEnglish() ? "DeepStateMapEn" : "DeepStateMap", "/style.json")
           }).addTo(map);
         }
       }
