@@ -43,7 +43,7 @@ var jsonLayerRailway = null;
 var currentBaseLayer = null;
 var baseLayers = {
   terrain: null,
-  "default": null,
+  "default": terrain,
   terrain: null,
   satellite: null
 };
